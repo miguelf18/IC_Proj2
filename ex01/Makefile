@@ -1,4 +1,4 @@
 all: makeMainRun
 
-makeMainRun: main.cpp
+makeMainRun: main.cpp bitStream.cpp
 	g++ main.cpp bitStream.cpp -o mainRun
