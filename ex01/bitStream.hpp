@@ -33,22 +33,22 @@ class BitStream
         unsigned char size();
         // writes bit to buffer
         // bits are written from most significant to least significant bit
-        // if bits exceed buffer size, it will only contain the last buffer size bits
+        // if bits exceed buffer size, it will write buffer to file before storing the next bits
         void write_bit(unsigned char bit);
         // writes n bits to buffer
         // bits are written from most significant to least significant bit
-        // if bits exceed buffer size, it will only contain the last buffer size bits
+        // if bits exceed buffer size, it will write buffer to file before storing the next bits
         void write_n_bits(unsigned char *bits, int bits_size);
         // writes 8 bits to open file and resets buffer
         // returns 1 if there was an error with the file, or 0 otherwise
         bool flush_file();
         // reads 1 bit from buffer and stores it in a given memory address
         // bits are read from least significant to most significant bit 
-        // if buffer is empty, nothing happens
+        // if buffer is empty, it fills buffer with next byte from file
         void read_bit(unsigned char *bit);
         // reads n bits from buffer and stores it in a given memory address
         // bits are read from least significant to most significant bit 
-        // if buffer is empty, nothing happens
+        // if buffer is empty, it fills buffer with next byte from file
         void read_n_bits(unsigned char *bits, int bits_size);
         // reads file and fills buffer with 1 byte of data, overwriting any existing buffer content
         // returns 1 if there was an error with the file, or 0 otherwise
