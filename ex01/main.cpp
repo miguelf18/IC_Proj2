@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
     cout << endl << "Reading bit by bit: " << endl;
 
-    // reads from least significant to most significant bit
+    // reads from most significant to least significant bit
     unsigned char bit = 0;
     bit_in_stream.read_bit(&bit);
     cout << endl << (bit == 1) << endl;   
@@ -60,6 +60,7 @@ int main(int argc, char **argv)
     bit_in_stream.read_bit(&bit);  
     cout << endl << (bit == 1) << endl;   
 
+    // reads from most significant to least significant bit
     unsigned char read_bits[8];
 
     bit_in_stream.read_n_bits(read_bits, 8);

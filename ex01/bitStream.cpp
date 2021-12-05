@@ -73,7 +73,7 @@ bool BitStream::flush_file()
 }
 
 // reads 1 bit from buffer and stores it in a given memory address
-// bits are read from least significant to most significant bit 
+// bits are read from most significant to least significant bit
 // if buffer is empty, it fills buffer with next byte from file
 void BitStream::read_bit(unsigned char *bit)
 {
@@ -82,16 +82,22 @@ void BitStream::read_bit(unsigned char *bit)
     // make sure storage has no previous content
     (*bit) &= 0x00;
     // store bit from buffer
-    (*bit) |= (0x01 & bit_buffer.buffer);
+    unsigned int mask = 1;
+    mask <<= bit_buffer.size-1;
+    unsigned int masked_bits = (mask & bit_buffer.buffer);
+    if(masked_bits > 0)
+        (*bit) = 1;
+    else
+        (*bit) = 0;
     // discard stored bit from buffer
-    bit_buffer.buffer >>= 1;
+    bit_buffer.buffer <<= 1;
     // update buffer count
     if(bit_buffer.count > 0)
         bit_buffer.count--;
 }
 
-// bits are read from least significant to most significant bit 
 // reads n bits from buffer and stores it in a given memory address
+// bits are read from most significant to least significant bit
 // if buffer is empty, it fills buffer with next byte from file
 void BitStream::read_n_bits(unsigned char *bits, int bits_size)
 {
@@ -102,10 +108,16 @@ void BitStream::read_n_bits(unsigned char *bits, int bits_size)
         // make sure storage has no previous content
         (*bits) &= 0x00;
         // store bit from buffer
-        (*bits) |= (0x01 & bit_buffer.buffer);
+        unsigned int mask = 1;
+        mask <<= bit_buffer.size-1;
+        unsigned int masked_bits = (mask & bit_buffer.buffer);
+        if(masked_bits > 0)
+            (*bits) = 1;
+        else
+            (*bits) = 0;
         bits++;
         // discard stored bit from buffer
-        bit_buffer.buffer >>= 1;
+        bit_buffer.buffer <<= 1;
         // update buffer count
         if(bit_buffer.count > 0)
             bit_buffer.count--;

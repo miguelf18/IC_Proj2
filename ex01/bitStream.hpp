@@ -43,11 +43,11 @@ class BitStream
         // returns 1 if there was an error with the file, or 0 otherwise
         bool flush_file();
         // reads 1 bit from buffer and stores it in a given memory address
-        // bits are read from least significant to most significant bit 
+        // bits are read from most significant to least significant bit
         // if buffer is empty, it fills buffer with next byte from file
         void read_bit(unsigned char *bit);
         // reads n bits from buffer and stores it in a given memory address
-        // bits are read from least significant to most significant bit 
+        // bits are read from most significant to least significant bit
         // if buffer is empty, it fills buffer with next byte from file
         void read_n_bits(unsigned char *bits, int bits_size);
         // reads file and fills buffer with 1 byte of data, overwriting any existing buffer content
