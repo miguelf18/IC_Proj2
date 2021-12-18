@@ -3,21 +3,26 @@
 
 class Golomb
 {
-    private:
-        // int i;
-        // int m;
-
     public:
-        Golomb(/*int i, int m*/);
+        Golomb(int _i, int _m);
+        Golomb();
 
-        // int geti() { return i; }
-        // int getm() { return m; }
+        void setValues(int _i,int _m);
+        int checkValues(int i,int m);
 
-        int binArrLength;
+        int geti() { return i; }
+        int getm() { return m; }
+
+        int * encode();
+        int decode(int* c);
+
+    private:
+        int i, m;
+        int binArrLength, unArrLength;
         int * decimalToBinary(int n, int length = -1);
         int * decimalToUnary(int n);
         int * codeword(int* u, int uLength, int* b, int bLength);
-        int * encoder(int i, int m);
+        int binaryToDecimal(int* bin);
 };
 
 #endif // GOLOMB_H

@@ -5,14 +5,44 @@
 using namespace std;
 
 // constructor
-Golomb::Golomb(/*int i, int m*/)
+Golomb::Golomb(int _i, int _m)
 {
-    // i = i;
-    // m = m;
+    i = _i;
+    m = _m;
+    checkValues(i, m);
+}
+
+Golomb::Golomb()
+{
+    i = 0;
+    m = 1;
 }
 
 // functions
-int binArrLength;
+void Golomb::setValues(int _i, int _m)
+{
+    i = _i;
+    m = _m;
+    checkValues(i, m);
+}
+
+int Golomb::checkValues(int i,int m)
+{
+    if(i < 0)
+    {
+        cout << "i tem de ser maior ou igual a 0" << endl;
+        exit(0);
+    }
+    if(m <= 0)
+    {
+        cout << "m tem de ser maior que 0" << endl;
+        exit(1);
+    }
+    return 0;
+}
+
+int binArrLength = 0;
+int unArrLength = 0;
 
 int * Golomb::decimalToBinary(int n, int length)
 {
@@ -36,7 +66,7 @@ int * Golomb::decimalToBinary(int n, int length)
         if(binArrLength < length) {
             int *tmp = new int[length];
             int dif = length - binArrLength;
-            cout << "dif = " << dif << endl;
+            //cout << "dif = " << dif << endl;
             // meter 'dif' zeros antes do numero binário
             for(int i=0; i<dif; i++) {
                 tmp[i] = 0;
@@ -62,7 +92,25 @@ int * Golomb::decimalToUnary(int n) {
     }
     res[n] = 0;
 
+    unArrLength = n+1;
+
     return res;
+}
+
+int Golomb::binaryToDecimal(int* bin) {
+    int sum = 0;
+	int n = binArrLength-1;
+	int power = 1;
+
+	while(n>0) { 
+        if (bin[n]==1) sum = sum + pow(2, power);
+        power++;
+        n--;
+    }
+
+	if (bin[binArrLength-1]==1) sum=sum+1;
+
+	return sum;
 }
 
 int * Golomb::codeword(int* u, int uLength, int* b, int bLength) {
@@ -85,7 +133,7 @@ int * Golomb::codeword(int* u, int uLength, int* b, int bLength) {
     return cw;
 }
 
-int * Golomb::encoder(int i, int m) {
+int * Golomb::encode() {
 
     int q, r;
 
@@ -109,7 +157,7 @@ int * Golomb::encoder(int i, int m) {
 
         if (r < rValsSeparation) // codificar resto com b-1 bits em binario
         {
-            cout << "r pertence aos primeiros " << rValsSeparation << " valores de r" << endl;
+            //cout << "r pertence aos primeiros " << rValsSeparation << " valores de r" << endl;
 
             rBinary = decimalToBinary(r, b-1);
         }
@@ -120,4 +168,29 @@ int * Golomb::encoder(int i, int m) {
         }
         return codeword(qUnary, q+1, rBinary, binArrLength);
     }
+}
+
+int Golomb::decode(int* cw) {
+    int r;
+    int q = unArrLength-1;      // unario p decimal
+
+    int cwLength = unArrLength+binArrLength;
+
+    int *bin = new int[binArrLength];
+    int bidx = 0;
+    for(int i=unArrLength; i<cwLength; i++) {
+        // cout << cw[i];
+        bin[bidx] = cw[i];
+        bidx++;
+    }
+
+    // caso m seja potencia de 2 -> passar p decimal o array bin
+    if (ceil(log2(m)) == floor(log2(m))) { // m é potencia de 2
+        r = binaryToDecimal(bin);   // conv bin to decimal
+    }
+    else { // m não é potencia de 2
+        r = 1234567890;
+    }
+
+    return m*q+r; // i/m -> i = m*q+r
 }
