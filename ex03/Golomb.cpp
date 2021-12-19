@@ -12,6 +12,13 @@ Golomb::Golomb(int _i, int _m)
     checkValues(i, m);
 }
 
+Golomb::Golomb(int _m)
+{
+    i = 0;
+    m = _m;
+    checkValues(i, m);
+}
+
 Golomb::Golomb()
 {
     i = 0;
@@ -28,13 +35,11 @@ void Golomb::setValues(int _i, int _m)
 
 int Golomb::checkValues(int i,int m)
 {
-    if(i < 0)
-    {
+    if(i < 0) {
         cout << "i tem de ser maior ou igual a 0" << endl;
         exit(0);
     }
-    if(m <= 0)
-    {
+    if(m <= 0) {
         cout << "m tem de ser maior que 0" << endl;
         exit(1);
     }
@@ -43,6 +48,7 @@ int Golomb::checkValues(int i,int m)
 
 int binArrLength = 0;
 int unArrLength = 0;
+int cwArrLength = unArrLength+binArrLength;
 
 int * Golomb::decimalToBinary(int n, int length)
 {
@@ -99,17 +105,12 @@ int * Golomb::decimalToUnary(int n) {
 
 int Golomb::binaryToDecimal(int* bin) {
     int sum = 0;
-	int n = binArrLength-1;
-	int power = 1;
-
-	while(n>0) { 
-        if (bin[n]==1) sum = sum + pow(2, power);
+	int power = 0;
+	
+	for(int i=binArrLength-1; i>=0; i--){
+        sum = sum + bin[i]*pow(2, power);
         power++;
-        n--;
-    }
-
-	if (bin[binArrLength-1]==1) sum=sum+1;
-
+	}
 	return sum;
 }
 
@@ -124,11 +125,12 @@ int * Golomb::codeword(int* u, int uLength, int* b, int bLength) {
         cw[uLength+i] = b[i];
     }
 
-    cout << "codeword: ";
-    for(int i=0; i<uLength+bLength; i++) {
-        cout << cw[i];
-    }
-    cout << endl;
+    // cout << "codeword: ";
+    // for(int i=0; i<uLength+bLength; i++) {
+    //     cout << cw[i];
+    // }
+    // cout << endl;
+    cwArrLength = uLength+bLength;
 
     return cw;
 }
@@ -139,30 +141,25 @@ int * Golomb::encode() {
 
     q = floor(i / m); // quociente -> unario
     r = i - (q * m);  // resto -> binario
-    cout << "q: " << q << endl;
-    cout << "r: " << r << endl;
+    // cout << "q: " << q << endl;
+    // cout << "r: " << r << endl;
 
     int *qUnary = decimalToUnary(q);
 
-    if (ceil(log2(m)) == floor(log2(m))) // m é potencia de 2
-    {
+    if(ceil(log2(m)) == floor(log2(m))) { // m é potencia de 2
         int *rBinary = decimalToBinary(r);
         return codeword(qUnary, q+1, rBinary, binArrLength);
     }
-    else // m não é potencia de 2
-    {
+    else { // m não é potencia de 2
         int b = ceil(log2(m));
-        int rValsSeparation = pow(2, b) - m;
+        int unusedCodes = pow(2, b) - m;
         int *rBinary;
 
-        if (r < rValsSeparation) // codificar resto com b-1 bits em binario
-        {
-            //cout << "r pertence aos primeiros " << rValsSeparation << " valores de r" << endl;
-
+        if(r < unusedCodes) { // codificar resto com b-1 bits em binario
+            //cout << "r pertence aos primeiros " << unusedCodes << " valores de r" << endl;
             rBinary = decimalToBinary(r, b-1);
         }
-        else // codificar a formula com b bits em binario
-        {
+        else { // codificar a formula com b bits em binario
             int num = r + pow(2, b) - m;
             rBinary = decimalToBinary(num, b);
         }
@@ -171,26 +168,37 @@ int * Golomb::encode() {
 }
 
 int Golomb::decode(int* cw) {
-    int r;
-    int q = unArrLength-1;      // unario p decimal
+    int r, i; // i/m -> i = m*q+r
+    int q = unArrLength-1; // unario p decimal
 
     int cwLength = unArrLength+binArrLength;
 
     int *bin = new int[binArrLength];
     int bidx = 0;
     for(int i=unArrLength; i<cwLength; i++) {
-        // cout << cw[i];
         bin[bidx] = cw[i];
         bidx++;
     }
 
-    // caso m seja potencia de 2 -> passar p decimal o array bin
-    if (ceil(log2(m)) == floor(log2(m))) { // m é potencia de 2
-        r = binaryToDecimal(bin);   // conv bin to decimal
+    if(ceil(log2(m)) == floor(log2(m))) { // m é potencia de 2
+        r = binaryToDecimal(bin); // conv bin to decimal
+        i = m*q+r;
     }
     else { // m não é potencia de 2
-        r = 1234567890;
-    }
+        int wrong_r = binaryToDecimal(bin);
+        int b = ceil(log2(m));
+        int unusedCodes = pow(2, b) - m;
+        int *rBinary;
 
-    return m*q+r; // i/m -> i = m*q+r
+        if(wrong_r < unusedCodes) { // primeiros "unusedCodes" valores de r
+            // cout << "r pertence aos primeiros " << unusedCodes << " valores de r" << endl;
+            r = binaryToDecimal(bin);
+            i = m*q+r;
+        }
+        else {
+            i = wrong_r - unusedCodes;
+        }
+    }
+    // cout << "r: " << r << endl;
+    return i;
 }

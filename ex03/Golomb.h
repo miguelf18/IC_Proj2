@@ -5,6 +5,7 @@ class Golomb
 {
     public:
         Golomb(int _i, int _m);
+        Golomb(int _m);
         Golomb();
 
         void setValues(int _i,int _m);
@@ -12,6 +13,8 @@ class Golomb
 
         int geti() { return i; }
         int getm() { return m; }
+
+        int cwArrLength;
 
         int * encode();
         int decode(int* c);
