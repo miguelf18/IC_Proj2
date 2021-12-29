@@ -1,0 +1,9 @@
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/Experimental.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/Nightly.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/Continuous.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/NightlyMemoryCheck.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/ex08.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/PACKAGE.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/RUN_TESTS.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/DiogoLaptop/OneDrive - Universidade de Aveiro/4ano/IC/Labs/Project 02/ex08/build/CMakeFiles/ZERO_CHECK.dir

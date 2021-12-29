@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\DiogoLaptop\OneDrive - Universidade de Aveiro\4ano\IC\Labs\Project 02\ex09\build\CMakeFiles\f1e7cfe6b1556b0e95c1d4e81c6917ef\Continuous.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\DiogoLaptop\OneDrive - Universidade de Aveiro\4ano\IC\Labs\Project 02\ex09\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\DiogoLaptop\OneDrive - Universidade de Aveiro\4ano\IC\Labs\Project 02\ex09\build\CMakeFiles\Continuous" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{59765E6C-5DC3-34C8-9518-8462E693FC2C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
